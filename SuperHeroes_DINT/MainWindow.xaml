@@ -6,9 +6,12 @@
         xmlns:local="clr-namespace:SuperHeroes_DINT"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:BackgroundConverter x:Key="fondoConverter"></local:BackgroundConverter>
+    </Window.Resources>
     <TabControl>
         <TabItem Header="Ver SuperHeroes">
-            <DockPanel x:Name="verSuperHeroe">
+            <DockPanel x:Name="verSuperHeroe" Background="{Binding Path=Heroe, Converter={StaticResource fondoConverter}}">
                 <StackPanel DockPanel.Dock="Bottom" Height="30" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Image x:Name="flechaIzqImage" Source="arrow.png" MouseLeftButtonDown="retrocederheroe_MouseLeftButtonDown"/>
                     <TextBlock x:Name="contadorTextBlock" FontFamily="Bold" FontSize="20" VerticalAlignment="Center"/>
@@ -24,7 +27,7 @@
                     </Image>
                 </StackPanel>
                 <DockPanel DockPanel.Dock="Top" LastChildFill="False">
-                    <TextBlock x:Name="nombreTextBlock" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="nombreTextBlock" DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding Path=Nombre}"/>
                     <Image x:Name="xMenImage" DockPanel.Dock="Right" Source="xmen.png" Width="50" VerticalAlignment="Center" Visibility="Hidden"/>
                     <Image x:Name="avengersImage" DockPanel.Dock="Right" Source="avengers.png" Width="50" VerticalAlignment="Center" Visibility="Hidden"/>
                 </DockPanel>
@@ -32,7 +35,7 @@
             </DockPanel>
         </TabItem>
         <TabItem Header=" Nuevo Superheroe">
-            <Grid x:Name="nuevoSuperheroe">
+            <Grid x:Name="nuevoSuperheroeGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -48,14 +51,14 @@
                         <TextBlock Text="Nombre del superheroe"/>
                         <Image Source="info.png" Width="20"/>
                     </StackPanel>
-                    <TextBox x:Name="nombreTextBox"/>
+                    <TextBox x:Name="nombreTextBox" Text="{Binding Path= Nombre}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="0">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Imagen"/>
                         <Image Source="info.png" Width="20"/>
                     </StackPanel>
-                    <TextBox x:Name="imagenTextBox"/>
+                    <TextBox x:Name="imagenTextBox" Text="{Binding Path=Imagen}"/>
                 </StackPanel>
                 <Grid Grid.Column="0" Grid.Row="2">
                     <Grid.ColumnDefinitions>
@@ -64,14 +67,14 @@
                     </Grid.ColumnDefinitions>
                     <Border  Grid.Column="0">
                         <StackPanel>
-                            <RadioButton x:Name="heroeRadioButton" Content="Heroe"/>
-                            <RadioButton x:Name="villanoRadioButton" Content="Villano"/>
+                            <RadioButton x:Name="heroeRadioButton" Content="Heroe" IsChecked="{Binding Path= Heroe}"/>
+                            <RadioButton x:Name="villanoRadioButton" Content="Villano" IsChecked="{Binding Path= Villano}"/>
                         </StackPanel>
                     </Border>
                     <Border Grid.Column="1">
                         <StackPanel>
-                            <CheckBox x:Name="vengadoresCheckbox" Content="Vengadores"/>
-                            <CheckBox x:Name="xMenCheckBox" Content="X-men"/>
+                            <CheckBox x:Name="vengadoresCheckbox" Content="Vengadores" IsChecked="{Binding Path=Vengador}" IsEnabled="{Binding ElementName=heroeRadioButton}"/>
+                            <CheckBox x:Name="xMenCheckBox" Content="X-men" IsChecked="{Binding Xmen}" IsEnabled="{Binding ElementName=heroeRadioButton}"/>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -84,7 +87,7 @@
                     <Button x:Name="limpiarButton" Content="Limpiar" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Click="limpiarButton_Click"/>
                 </Grid>
                 <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" BorderThickness="2" BorderBrush="Black" Margin="10" CornerRadius="4">
-                    <Image x:Name="superheroeImage" Source="{Binding ElementName=imagenTextBox, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Image x:Name="superheroeImage" Source="{Binding ElementName=imagenTextBox, Path=Text}"/>
                 </Border>
             </Grid>
         </TabItem>

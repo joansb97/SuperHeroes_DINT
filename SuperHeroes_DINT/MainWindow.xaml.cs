@@ -20,6 +20,7 @@ namespace SuperHeroes_DINT
     /// </summary>
     public partial class MainWindow : Window
     {
+        Superheroe superheroe;
         List<Superheroe> superheroes;
         int numero;
         public MainWindow()
@@ -28,10 +29,12 @@ namespace SuperHeroes_DINT
             numero = 0;
             superheroes = Superheroe.GetSamples();
             Actualiza(superheroes[numero]);
+            superheroe = new Superheroe();
+            nuevoSuperheroeGrid.DataContext = superheroe;
         }
         private void retrocederheroe_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
-            if(numero > 1)
+            if(numero >= 1)
             {
                 numero--;
                 Actualiza(superheroes[numero]);
@@ -53,40 +56,21 @@ namespace SuperHeroes_DINT
 
             if (aux.Heroe)
             {
-                verSuperHeroe.Background = Brushes.PaleGreen;
                 if (aux.Vengador) avengersImage.Visibility = Visibility.Visible;
+                else if(!aux.Vengador) avengersImage.Visibility = Visibility.Hidden;
                 if (aux.Xmen) xMenImage.Visibility = Visibility.Visible;
+                else if(!aux.Xmen) xMenImage.Visibility = Visibility.Hidden;
             }
-            else verSuperHeroe.Background = Brushes.IndianRed;
+            else
+            {
+                avengersImage.Visibility = Visibility.Hidden;
+                xMenImage.Visibility = Visibility.Hidden;
+            }
 
         }
         private void aceptarButton_Click(object sender,RoutedEventArgs e)
         {
-            string nombre = nombreTextBox.Text;
-            string imagen = imagenTextBox.Text;
-            bool vengador;
-            bool xmen;
-            bool heroe;
-            bool villano;
-            if (heroeRadioButton.IsChecked == false)
-            {
-                heroe = false;
-                vengador = false;
-                xmen = false;
-                villano = true;
-            }
-            else
-            {
-                heroe = true;
-                villano = false;
-
-                if (vengadoresCheckbox.IsChecked == true) vengador = true;
-                else vengador = false;
-
-                if (xMenCheckBox.IsChecked == true) xmen = true;
-                else xmen = false;
-            }
-            Superheroe aux = new Superheroe(nombre,imagen,vengador,xmen,heroe,villano);
+            Superheroe aux = superheroe;
             superheroes.Add(aux);
             MessageBox.Show("Superheroe insertado con exito");
             Limpiar();
@@ -97,8 +81,8 @@ namespace SuperHeroes_DINT
         }
         private void Limpiar()
         {
-            nombreTextBox.Text = "";
-            imagenTextBox.Text = "";
+            nombreTextBox.Clear();
+            imagenTextBox.Clear();
             heroeRadioButton.IsChecked = true;
             villanoRadioButton.IsChecked = false;
             vengadoresCheckbox.IsChecked = false;

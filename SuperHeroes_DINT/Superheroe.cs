@@ -14,7 +14,16 @@ namespace SuperHeroes_DINT
         public bool Vengador { get; set; }
         public bool Xmen { get; set; }
         public bool Heroe { get; set; }
-        public bool Villano { get; set; }
+        public bool Villano 
+        { 
+            get
+            {
+                return Villano;       
+            } 
+            set 
+            { 
+            } 
+        }
 
         public Superheroe()
         {
