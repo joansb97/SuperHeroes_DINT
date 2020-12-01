@@ -73,6 +73,8 @@ namespace SuperHeroes_DINT
             Superheroe aux = superheroe;
             superheroes.Add(aux);
             MessageBox.Show("Superheroe insertado con exito");
+            superheroe = new Superheroe();
+            nuevoSuperheroeGrid.DataContext = superheroe;
             Limpiar();
         }
         private void limpiarButton_Click(object sender,RoutedEventArgs e)
@@ -81,12 +83,13 @@ namespace SuperHeroes_DINT
         }
         private void Limpiar()
         {
-            nombreTextBox.Clear();
-            imagenTextBox.Clear();
-            heroeRadioButton.IsChecked = true;
-            villanoRadioButton.IsChecked = false;
-            vengadoresCheckbox.IsChecked = false;
-            xMenCheckBox.IsChecked = false;
+            Superheroe aux = (Superheroe)nuevoSuperheroeGrid.DataContext;
+            aux.Nombre = "";
+            aux.Imagen = "";
+            aux.Heroe = true;
+            aux.Vengador = false;
+            aux.Xmen = false;
+            aux.Villano = false;
         }
 
     }
