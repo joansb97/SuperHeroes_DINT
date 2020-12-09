@@ -21,7 +21,12 @@ namespace SuperHeroes_DINT
                 return Villano;       
             } 
             set 
-            { 
+            {
+                if (Villano == true)
+                {
+                    Vengador = false;
+                    Xmen = false;
+                }
             } 
         }
 
